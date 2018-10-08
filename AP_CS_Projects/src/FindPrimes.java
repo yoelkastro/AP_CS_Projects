@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class FindPrimes {
 
-	Integer[] findPrimeNumbers(int max){
+	static Integer[] findPrimeNumbers(int max){
 		
 		ArrayList<Integer> primes = new ArrayList<Integer>(); //Create new Integer ArrayList to store prime numbers
 		primes.add(2); //Add the first prime number (2)
@@ -29,6 +29,15 @@ public class FindPrimes {
 		ret = primes.toArray(ret); //Transform the ArrayList to an array
 		
 		return ret; //return the array
+	}
+	
+	public static void main(String[] args){
+		
+		Integer[] a = findPrimeNumbers(100000);
+		for(int i = 0; i < a.length; i ++){
+			System.out.print(a[i] + " ");
+		}
+		
 	}
 	
 }
