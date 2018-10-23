@@ -1,12 +1,9 @@
 package Breakout;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Rectangle;
 
 public class Breakout {
 
@@ -28,6 +25,8 @@ public class Breakout {
 	private Paddle paddle;
 	private Tile[] tiles;
 	
+	Rectangle r = new Rectangle(5, 5, 50, 50);
+	
 	public Breakout(){
 		this.pane = new DrawingPanel(this.PANEL_WIDTH, this.PANEL_HEIGHT);
 		
@@ -47,46 +46,28 @@ public class Breakout {
 		pane.onExit((x, y) -> this.isPaused = true);
 		pane.onKeyDown((x) -> {if(x == ' ') this.isPaused = !this.isPaused;});
 		
-		this.pane.addKeyListener(new KeyListener(){
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_SPACE){
-					isPaused = !isPaused;
-				}
-				
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {}
-			@Override
-			public void keyTyped(KeyEvent e) {}
+		this.loop();
+		
+	}
+	
+	private void loop(){
+		while(!isPaused){
 			
-		});
-		
-		this.tick();
+			/*System.out.println(this.tiles[0].getX());
+			System.out.println(this.mouseX);*/
+			this.render(this.pane.getGraphics());
+		}
 		
 	}
 	
-	private void tick(){
-		this.tiles[0].setX(mouseX);
-		System.out.println(this.tiles[0].getX());
-		System.out.println(this.mouseX);
-		this.render(this.pane.getGraphics());
-		
-		if(!this.isPaused)
-			this.tick();
-	}
-	
-	private void render(Graphics g){
+	private void render(Graphics2D g){
 		g.setColor(Color.WHITE);
-		g.fillRect(0, this.PANEL_HEIGHT - (this.PANEL_HEIGHT / 5), this.PANEL_WIDTH, this.PANEL_HEIGHT);
+		g.fillRect(0, 0, this.PANEL_WIDTH, this.PANEL_HEIGHT);
+		g.setColor(Color.BLACK);
+		g.fill(r);
+		//g.drawRect(tiles[0].getX(), tiles[0].getY(), (int) tiles[0].getSize().getWidth(), (int) tiles[0].getSize().getHeight());
 		for(int i = 0; i < tiles.length; i ++){
-			g.setColor(tiles[i].getColor());
-			g.fillRect(tiles[i].getX(), tiles[i].getY(), (int) tiles[i].getSize().getWidth(), (int) tiles[i].getSize().getHeight());
-			g.setColor(Color.BLACK);
-			g.drawRect(tiles[i].getX(), tiles[i].getY(), (int) tiles[i].getSize().getWidth(), (int) tiles[i].getSize().getHeight());
+			tiles[i].render(g);
 		}
 	}
 	
