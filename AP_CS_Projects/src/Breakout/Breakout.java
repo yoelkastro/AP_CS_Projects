@@ -61,8 +61,7 @@ public class Breakout {
 	}
 	
 	private void render(Graphics2D g){
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, this.PANEL_WIDTH, this.PANEL_HEIGHT);
+		pane.clear();
 		g.setColor(Color.BLACK);
 		g.fill(r);
 		//g.drawRect(tiles[0].getX(), tiles[0].getY(), (int) tiles[0].getSize().getWidth(), (int) tiles[0].getSize().getHeight());
